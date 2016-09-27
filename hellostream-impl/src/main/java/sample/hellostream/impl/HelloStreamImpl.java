@@ -13,21 +13,18 @@ import javax.inject.Inject;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
-/**
- * Implementation of the HelloString.
- */
 public class HelloStreamImpl implements HelloStream {
 
-  private final HelloService helloService;
+    private final HelloService helloService;
 
-  @Inject
-  public HelloStreamImpl(HelloService helloService) {
-    this.helloService = helloService;
-  }
+    @Inject
+    public HelloStreamImpl(HelloService helloService) {
+        this.helloService = helloService;
+    }
 
-  @Override
-  public ServiceCall<Source<String, NotUsed>, Source<String, NotUsed>> stream() {
-    return hellos -> completedFuture(
-        hellos.mapAsync(8, name -> helloService.hello(name).invoke()));
-  }
+    @Override
+    public ServiceCall<Source<String, NotUsed>, Source<String, NotUsed>> stream() {
+        return hellos -> completedFuture(
+                hellos.mapAsync(8, name -> helloService.hello(name).invoke()));
+    }
 }
