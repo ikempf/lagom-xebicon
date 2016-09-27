@@ -4,7 +4,7 @@
 package sample.helloworld.api;
 
 import static com.lightbend.lagom.javadsl.api.Service.named;
-import static com.lightbend.lagom.javadsl.api.Service.pathCall;
+import static com.lightbend.lagom.javadsl.api.Service.*;
 
 import akka.Done;
 import akka.NotUsed;

@@ -4,7 +4,7 @@
 package sample.hellostream.api;
 
 import static com.lightbend.lagom.javadsl.api.Service.named;
-import static com.lightbend.lagom.javadsl.api.Service.namedCall;
+import static com.lightbend.lagom.javadsl.api.Service.*;
 
 import akka.NotUsed;
 import akka.stream.javadsl.Source;
