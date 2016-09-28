@@ -33,7 +33,7 @@ public class HelloServiceImpl implements HelloService {
             PersistentEntityRef<HelloCommand> ref =
                     persistentEntityRegistry.refFor(HelloWorld.class, id);
 
-            return ref.ask(new Hello(id, Optional.empty()));
+            return ref.ask(new Hello(id));
         };
     }
 

@@ -39,12 +39,12 @@ public class HelloWorldTest {
     PersistentEntityTestDriver<HelloCommand, HelloEvent, WorldState> driver = new PersistentEntityTestDriver<>(system,
         new HelloWorld(), "world-1");
 
-    Outcome<HelloEvent, WorldState> outcome1 = driver.run(new Hello("Alice", Optional.empty()));
+    Outcome<HelloEvent, WorldState> outcome1 = driver.run(new Hello("Alice"));
     assertEquals("Hello, Alice!", outcome1.getReplies().get(0));
     assertEquals(Collections.emptyList(), outcome1.issues());
 
     Outcome<HelloEvent, WorldState> outcome2 = driver.run(new UseGreetingMessage("Hi"),
-        new Hello("Bob", Optional.empty()));
+        new Hello("Bob"));
     assertEquals(1, outcome2.events().size());
     assertEquals(new GreetingMessageChanged("Hi"), outcome2.events().get(0));
     assertEquals("Hi", outcome2.state().message);

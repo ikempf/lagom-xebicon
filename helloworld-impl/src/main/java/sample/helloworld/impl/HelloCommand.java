@@ -18,6 +18,8 @@ import com.lightbend.lagom.serialization.Jsonable;
 
 import akka.Done;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
+
 public interface HelloCommand extends Jsonable {
 
     @SuppressWarnings("serial")
@@ -51,7 +53,8 @@ public interface HelloCommand extends Jsonable {
 
         @Override
         public String toString() {
-            return MoreObjects.toStringHelper("UseGreetingMessage").add("message", message).toString();
+            return toStringHelper("UseGreetingMessage")
+                    .add("message", message).toString();
         }
     }
 
@@ -60,12 +63,10 @@ public interface HelloCommand extends Jsonable {
     @JsonDeserialize
     final class Hello implements HelloCommand, PersistentEntity.ReplyType<String> {
         public final String name;
-        public final Optional<String> organization;
 
         @JsonCreator
-        public Hello(String name, Optional<String> organization) {
+        public Hello(String name) {
             this.name = Preconditions.checkNotNull(name, "name");
-            this.organization = Preconditions.checkNotNull(organization, "organization");
         }
 
         @Override
@@ -76,21 +77,20 @@ public interface HelloCommand extends Jsonable {
         }
 
         private boolean equalTo(Hello another) {
-            return name.equals(another.name) && organization.equals(another.organization);
+            return name.equals(another.name);
         }
 
         @Override
         public int hashCode() {
             int h = 31;
             h = h * 17 + name.hashCode();
-            h = h * 17 + organization.hashCode();
             return h;
         }
 
         @Override
         public String toString() {
-            return MoreObjects.toStringHelper("Hello")
-                    .add("name", name).add("organization", organization).toString();
+            return toStringHelper("Hello")
+                    .add("name", name).toString();
         }
     }
 
