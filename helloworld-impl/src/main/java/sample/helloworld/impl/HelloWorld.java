@@ -3,7 +3,6 @@
  */
 package sample.helloworld.impl;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
@@ -18,17 +17,17 @@ public class HelloWorld extends PersistentEntity<HelloCommand, HelloEvent, World
     @Override
     public Behavior initialBehavior(Optional<WorldState> snapshotState) {
         BehaviorBuilder b = newBehaviorBuilder(
-                snapshotState.orElse(new WorldState("Hello", LocalDateTime.now().toString())));
+                snapshotState.orElse(new WorldState("Hello")));
+
+        b.setReadOnlyCommandHandler(Hello.class,
+                (cmd, ctx) -> ctx.reply(state().message + ", " + cmd.name + "!"));
 
         b.setCommandHandler(UseGreetingMessage.class, (cmd, ctx) ->
                 ctx.thenPersist(new GreetingMessageChanged(cmd.message),
                         evt -> ctx.reply(Done.getInstance())));
 
         b.setEventHandler(GreetingMessageChanged.class,
-                evt -> new WorldState(evt.message, LocalDateTime.now().toString()));
-
-        b.setReadOnlyCommandHandler(Hello.class,
-                (cmd, ctx) -> ctx.reply(state().message + ", " + cmd.name + "!"));
+                evt -> new WorldState(evt.message));
 
         return b.build();
     }

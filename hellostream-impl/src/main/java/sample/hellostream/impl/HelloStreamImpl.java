@@ -27,4 +27,5 @@ public class HelloStreamImpl implements HelloStream {
         return hellos -> completedFuture(
                 hellos.mapAsync(8, name -> helloService.hello(name).invoke()));
     }
+
 }

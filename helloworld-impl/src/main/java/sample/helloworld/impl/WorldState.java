@@ -18,12 +18,10 @@ import com.lightbend.lagom.serialization.CompressedJsonable;
 public final class WorldState implements CompressedJsonable {
 
     public final String message;
-    public final String timestamp;
 
     @JsonCreator
-    public WorldState(String message, String timestamp) {
+    public WorldState(String message) {
         this.message = Preconditions.checkNotNull(message, "message");
-        this.timestamp = Preconditions.checkNotNull(timestamp, "timestamp");
     }
 
     @Override
@@ -34,20 +32,19 @@ public final class WorldState implements CompressedJsonable {
     }
 
     private boolean equalTo(WorldState another) {
-        return message.equals(another.message) && timestamp.equals(another.timestamp);
+        return message.equals(another.message);
     }
 
     @Override
     public int hashCode() {
         int h = 31;
         h = h * 17 + message.hashCode();
-        h = h * 17 + timestamp.hashCode();
         return h;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper("WorldState")
-                .add("message", message).add("timestamp", timestamp).toString();
+                .add("message", message).toString();
     }
 }

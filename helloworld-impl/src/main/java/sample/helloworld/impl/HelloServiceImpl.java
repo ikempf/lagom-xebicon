@@ -28,12 +28,12 @@ public class HelloServiceImpl implements HelloService {
     }
 
     @Override
-    public ServiceCall<NotUsed, String> hello(String id) {
+    public ServiceCall<NotUsed, String> hello(String name) {
         return request -> {
             PersistentEntityRef<HelloCommand> ref =
-                    persistentEntityRegistry.refFor(HelloWorld.class, id);
+                    persistentEntityRegistry.refFor(HelloWorld.class, name);
 
-            return ref.ask(new Hello(id));
+            return ref.ask(new Hello(name));
         };
     }
 
